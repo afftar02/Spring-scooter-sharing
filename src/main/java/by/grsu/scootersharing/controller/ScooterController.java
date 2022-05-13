@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("scooter-sharing/api/scooters")
@@ -25,10 +24,9 @@ public class ScooterController {
     }
 
     @PutMapping("/{userId}/scooter")
-    public String updateScooter(@PathVariable String userId, @RequestParam String id){
+    public String updateScooter(@PathVariable String userId,@RequestBody Scooter scooter){
 //        scooterService.updateScooter(scooter);
-        System.out.println(userId + " " + id);
+        System.out.println(userId + " " + scooter.getModelName());
         return "put is working";
-        //TODO: доделать обновление самоката через передачу в requestparam обьекта scooter
     }
 }

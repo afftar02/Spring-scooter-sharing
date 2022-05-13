@@ -3,13 +3,12 @@ package by.grsu.scootersharing.controller;
 import by.grsu.scootersharing.model.User;
 import by.grsu.scootersharing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("scooter-sharing/api/user")
 public class UserController {
 
@@ -25,4 +24,8 @@ public class UserController {
         return userService.getUsers();
     }
 
+    @PostMapping
+    public String addUser(){
+        return "";
+    }
 }

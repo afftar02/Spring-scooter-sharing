@@ -4,29 +4,34 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Getter
 @Setter
 public class User {
-    private UUID userId;
-    private String username;
+    private long userId;
+    private String firstName;
+    private String secondName;
+    private String email;
+    private String password;
 
-    public User(UUID userProfileId, String username) {
-        this.userId = userProfileId;
-        this.username = username;
+    public User(long userId, String firstName, String secondName, String email, String password) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.email = email;
+        this.password = password;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User that = (User) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(username, that.username);
+        User user = (User) o;
+        return userId == user.userId && firstName.equals(user.firstName) && secondName.equals(user.secondName) && email.equals(user.email) && password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, username);
+        return Objects.hash(userId, firstName, secondName, email, password);
     }
 }
