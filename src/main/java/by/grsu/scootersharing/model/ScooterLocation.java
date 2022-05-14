@@ -2,11 +2,13 @@ package by.grsu.scootersharing.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Objects;
 
 @Getter
 @Setter
+@ToString
 public class ScooterLocation {
     private String name;
     private String description;

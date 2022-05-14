@@ -1,18 +1,30 @@
 package by.grsu.scootersharing.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Objects;
 
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
 public class User {
     private long userId;
     private String firstName;
     private String secondName;
     private String email;
     private String password;
+
+    public User(User user, long id){
+        this.userId = id;
+        this.firstName = user.firstName;
+        this.secondName = user.secondName;
+        this.email = user.email;
+        this.password = user.password;
+    }
 
     public User(long userId, String firstName, String secondName, String email, String password) {
         this.userId = userId;

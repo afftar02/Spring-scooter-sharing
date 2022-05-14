@@ -32,6 +32,10 @@ public class FakeDB {
         return USERS;
     }
 
+    public void addUser(User user){
+        USERS.add(user);
+    }
+
     public void updateScooter(Scooter scooter){
         SCOOTERS.removeIf(item -> item.getScooterId() == scooter.getScooterId());
         SCOOTERS.add(scooter);
