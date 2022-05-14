@@ -15,17 +15,13 @@ public class FakeDB {
 
     //TODO:сделать хранение картинок на сервере
     static{
-        SCOOTERS.add(new Scooter(1,new ScooterLocation("Grodno","GRSU building"),100,"Xiaomi model 228"));
-        SCOOTERS.add(new Scooter(2,new ScooterLocation("LA","Venice beach"),85,"Xiaomi model 228"));
-        SCOOTERS.add(new Scooter(3,new ScooterLocation("Sydney","Sydney bridge"),30,"Xiaomi model 228"));
+        SCOOTERS.add(new Scooter(1,new ScooterLocation("Grodno","GRSU building"),100,"Xiaomi model 123"));
+        SCOOTERS.add(new Scooter(2,new ScooterLocation("LA","Venice beach"),85,"Xiaomi model 456"));
+        SCOOTERS.add(new Scooter(3,new ScooterLocation("Sydney","Sydney bridge"),30,"Xiaomi model 789"));
 
         USERS.add(new User(1,"Nick","Johnson","nick@gmail.com","Nick123"));
         USERS.add(new User(2,"Kate","Rodrigues","kate@gmail.com","Kate456"));
         USERS.add(new User(3,"Alex","Kooper","alex@gmail.com","Alex789"));
-    }
-
-    public List<Scooter> getScooters(){
-        return SCOOTERS;
     }
 
     public List<User> getUsers(){
@@ -34,6 +30,19 @@ public class FakeDB {
 
     public void addUser(User user){
         USERS.add(user);
+    }
+
+    public void updateUser(User user){
+        USERS.removeIf(x -> (x.getUserId() == user.getUserId()));
+        USERS.add(user);
+    }
+
+    public void deleteUser(long id){
+        USERS.removeIf(x -> (x.getUserId() == id));
+    }
+
+    public List<Scooter> getScooters(){
+        return SCOOTERS;
     }
 
     public void updateScooter(Scooter scooter){

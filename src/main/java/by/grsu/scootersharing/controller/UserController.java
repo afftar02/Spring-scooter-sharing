@@ -18,7 +18,7 @@ public class UserController {
 
     private final UserService userService;
     private final ObjectMapper mapper;
-    private final static Logger logger = Logger.getLogger(UserController.class.toString());
+    private static final Logger logger = Logger.getLogger(UserController.class.toString());
 
 
     @Autowired
@@ -28,20 +28,35 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return userService.getUsers();
     }
 
     @PostMapping
-    public String addUser(@RequestBody String requestJson){
+    public String addUser(@RequestBody String requestJson) {
         try {
             UserDto dto = mapper.readValue(requestJson, UserDto.class);
             UserDto response = userService.create(dto);
-            String responseJson = mapper.writeValueAsString(response);
-            return responseJson;
+            return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            logger.info("Exception json processing "+e.getMessage());
+            logger.info("Exception json processing " + e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    @PutMapping
+    public void update(@RequestBody String requestJson) {
+        try {
+            UserDto dto = mapper.readValue(requestJson, UserDto.class);
+            userService.update(dto);
+        } catch (JsonProcessingException e) {
+            logger.info("Exception json processing " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @DeleteMapping
+    public void delete(@RequestBody long id){
+        userService.delete(id);
     }
 }

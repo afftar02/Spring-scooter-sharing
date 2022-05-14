@@ -31,6 +31,14 @@ public class UserRepository {
         return newUser;
     }
 
+    public void update(User user){
+        database.updateUser(user);
+    }
+
+    public void delete(long id){
+        database.deleteUser(id);
+    }
+
     private boolean isIdExists(long id) {
         for (var user : database.getUsers()) {
             if (user.getUserId() == id) {

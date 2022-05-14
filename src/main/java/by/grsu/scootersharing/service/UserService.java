@@ -30,4 +30,13 @@ public class UserService {
         User response = userRepository.create(user);
         return modelMapper.map(response,UserDto.class);
     }
+
+    public void update(UserDto dto){
+        User user = modelMapper.map(dto,User.class);
+        userRepository.update(user);
+    }
+
+    public void delete(long id){
+        userRepository.delete(id);
+    }
 }
