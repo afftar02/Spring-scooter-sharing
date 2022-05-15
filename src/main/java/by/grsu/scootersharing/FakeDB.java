@@ -15,9 +15,9 @@ public class FakeDB {
 
     //TODO:сделать хранение картинок на сервере
     static{
-        SCOOTERS.add(new Scooter(1,new ScooterLocation("Grodno","GRSU building"),100,"Xiaomi model 123"));
-        SCOOTERS.add(new Scooter(2,new ScooterLocation("LA","Venice beach"),85,"Xiaomi model 456"));
-        SCOOTERS.add(new Scooter(3,new ScooterLocation("Sydney","Sydney bridge"),30,"Xiaomi model 789"));
+        SCOOTERS.add(new Scooter(1,new ScooterLocation("Grodno","GRSU building"),100,"img/xiaomi-scooter-1.png","Xiaomi model 123"));
+        SCOOTERS.add(new Scooter(2,new ScooterLocation("LA","Venice beach"),85,"img/xiaomi-scooter-1.png","Xiaomi model 456"));
+        SCOOTERS.add(new Scooter(3,new ScooterLocation("Sydney","Sydney bridge"),30,"img/xiaomi-scooter-1.png","Xiaomi model 789"));
 
         USERS.add(new User(1,"Nick","Johnson","nick@gmail.com","Nick123"));
         USERS.add(new User(2,"Kate","Rodrigues","kate@gmail.com","Kate456"));
@@ -46,7 +46,7 @@ public class FakeDB {
     }
 
     public void updateScooter(Scooter scooter){
-        SCOOTERS.removeIf(item -> item.getScooterId() == scooter.getScooterId());
+        SCOOTERS.removeIf(item -> item.getId() == scooter.getId());
         SCOOTERS.add(scooter);
     }
 }

@@ -1,16 +1,29 @@
 package by.grsu.scootersharing.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@Entity
+@Table(name = "locations")
 public class ScooterLocation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
+
+    @Column(name = "name",nullable = false)
     private String name;
+
+    @Column(name = "description",length = 500,nullable = false)
     private String description;
 
     public ScooterLocation(String name, String description) {

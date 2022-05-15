@@ -1,25 +1,48 @@
 package by.grsu.scootersharing.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@Entity
+@Table(name = "scooters")
 public class Scooter {
-    private long scooterId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
+
+    @OneToOne()
+    @JoinTable(name = "locations",
+            joinColumns = {@JoinColumn(name = "scooter_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "location_id", referencedColumnName = "id")})
     private ScooterLocation location;
+
+    @Column(name = "battery",nullable = false)
     private double battery;
+
+    @Column(name = "image_url",nullable = false)
+    private String imageUrl;
+
+    @Column(name = "model",nullable = false)
     private String modelName;
+
+    @Column(name = "booked",nullable = false)
     private boolean isBooked = false;
 
-    public Scooter(long scooterId, ScooterLocation location, double battery, String modelName) {
-        this.scooterId = scooterId;
+    public Scooter(long id, ScooterLocation location, double battery, String imageUrl, String modelName) {
+        this.id = id;
         this.location = location;
         this.battery = battery;
+        this.imageUrl = imageUrl;
         this.modelName = modelName;
     }
 
@@ -28,11 +51,11 @@ public class Scooter {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Scooter scooter = (Scooter) o;
-        return scooterId == scooter.scooterId && Double.compare(scooter.battery, battery) == 0 && isBooked == scooter.isBooked && location.equals(scooter.location) && modelName.equals(scooter.modelName);
+        return id == scooter.id && Double.compare(scooter.battery, battery) == 0 && isBooked == scooter.isBooked && location.equals(scooter.location) && imageUrl.equals(scooter.imageUrl) && modelName.equals(scooter.modelName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(scooterId, location, battery, modelName, isBooked);
+        return Objects.hash(id, location, battery, imageUrl, modelName, isBooked);
     }
 }

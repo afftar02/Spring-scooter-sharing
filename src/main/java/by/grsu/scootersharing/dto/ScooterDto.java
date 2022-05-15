@@ -5,9 +5,11 @@ import lombok.Data;
 
 @Data
 public class ScooterDto {
-    public long scooterId;
+    public long id;
     public ScooterLocation location;
     public double battery;
+    public String imageUrl;
     public String modelName;
+    public String userId;
     public boolean isBooked = false;
 }
