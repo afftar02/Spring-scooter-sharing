@@ -13,46 +13,60 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
-@Entity
-@Table(name = "users")
+@Entity(name = "User")
+@Table(
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "user_email_unique", columnNames = "email")
+        }
+)
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long userId;
+    @SequenceGenerator(
+            name = "user_sequence",
+            sequenceName = "user_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "user_sequence"
+    )
+    @Column(name = "id", updatable = false)
+    private long id;
 
-    @Column(name = "first_name",nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "second_name",nullable = false)
+    @Column(name = "second_name", nullable = false)
     private String secondName;
 
-    @Column(name = "email",nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "password",nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @OneToMany()
-    @JoinTable(name = "scooters",
+    @JoinTable(name = "users_scooters_join",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "scooters_id", referencedColumnName = "id")})
+            inverseJoinColumns = {@JoinColumn(name = "scooter_id", referencedColumnName = "id")})
     private List<Scooter> scooters;
 
-    public User(User user, long id){
-        this.userId = id;
+    public User(User user) {
+        this.id = user.id;
         this.firstName = user.firstName;
         this.secondName = user.secondName;
         this.email = user.email;
         this.password = user.password;
+        this.scooters = user.scooters;
     }
 
-    public User(long userId, String firstName, String secondName, String email, String password) {
-        this.userId = userId;
+    public User(String firstName, String secondName, String email, String password, List<Scooter> scooters) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.email = email;
         this.password = password;
+        this.scooters = scooters;
     }
 
     @Override
@@ -60,11 +74,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && firstName.equals(user.firstName) && secondName.equals(user.secondName) && email.equals(user.email) && Objects.equals(scooters, user.scooters) && password.equals(user.password);
+        return id == user.id && firstName.equals(user.firstName) && secondName.equals(user.secondName) && email.equals(user.email) && Objects.equals(scooters, user.scooters) && password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstName, secondName, email, scooters, password);
+        return Objects.hash(id, firstName, secondName, email, scooters, password);
     }
 }

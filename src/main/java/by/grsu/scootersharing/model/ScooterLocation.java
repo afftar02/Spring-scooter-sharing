@@ -6,24 +6,33 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@Entity
+@Entity(name = "Location")
 @Table(name = "locations")
 public class ScooterLocation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @SequenceGenerator(
+            name = "location_sequence",
+            sequenceName = "location_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "location_sequence"
+    )
+    @Column(name = "id",updatable = false)
     private long id;
 
     @Column(name = "name",nullable = false)
     private String name;
 
-    @Column(name = "description",length = 500,nullable = false)
+    @Column(name = "description",columnDefinition = "TEXT",nullable = false)
     private String description;
 
     public ScooterLocation(String name, String description) {

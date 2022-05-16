@@ -32,6 +32,17 @@ public class UserController {
         return userService.getUsers();
     }
 
+    @GetMapping("/{userId}")
+    public String getUserById(@PathVariable String userId){
+        try {
+            long id = Long.parseLong(userId);
+            return mapper.writeValueAsString(userService.getUserById(id));
+        } catch (JsonProcessingException e) {
+            logger.info("Exception json processing " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
     @PostMapping
     public String addUser(@RequestBody String requestJson) {
         try {

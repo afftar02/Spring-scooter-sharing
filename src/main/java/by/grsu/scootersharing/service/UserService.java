@@ -25,6 +25,11 @@ public class UserService {
         return userRepository.getUsers();
     }
 
+    public UserDto getUserById(long id){
+        User response = userRepository.getUserById(id);
+        return modelMapper.map(response,UserDto.class);
+    }
+
     public UserDto create(UserDto dto){
         User user = modelMapper.map(dto,User.class);
         User response = userRepository.create(user);

@@ -10,6 +10,5 @@ public class ScooterDto {
     public double battery;
     public String imageUrl;
     public String modelName;
-    public String userId;
     public boolean isBooked = false;
 }

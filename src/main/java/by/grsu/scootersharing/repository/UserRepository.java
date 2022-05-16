@@ -1,50 +1,44 @@
 package by.grsu.scootersharing.repository;
 
-import by.grsu.scootersharing.FakeDB;
+import by.grsu.scootersharing.api.repository.UserRepositoryAbstract;
+import by.grsu.scootersharing.dto.UserDto;
 import by.grsu.scootersharing.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Repository
 public class UserRepository {
-    private final FakeDB database;
+    private final UserRepositoryAbstract userRepositoryAbstract;
 
     @Autowired
-    public UserRepository(FakeDB database){
-        this.database = database;
+    public UserRepository(UserRepositoryAbstract userRepositoryAbstract) {
+        this.userRepositoryAbstract = userRepositoryAbstract;
     }
 
     public List<User> getUsers(){
-        return database.getUsers();
+        return userRepositoryAbstract.findAll();
+    }
+
+    public User getUserById(long id){
+        return userRepositoryAbstract.getById(id);
     }
 
     public User create(User user){
-        long id;
-        do {
-            id = ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
-        } while (isIdExists(id));
-        User newUser = new User(user, id);
-        database.addUser(newUser);
-        return newUser;
+        return userRepositoryAbstract.save(user);
     }
 
     public void update(User user){
-        database.updateUser(user);
+        userRepositoryAbstract.getById(user.getId()).setFirstName(user.getFirstName());
+        userRepositoryAbstract.getById(user.getId()).setSecondName(user.getSecondName());
+        userRepositoryAbstract.getById(user.getId()).setEmail(user.getEmail());
+        userRepositoryAbstract.getById(user.getId()).setPassword(user.getPassword());
+        userRepositoryAbstract.getById(user.getId()).setScooters(user.getScooters());
+        userRepositoryAbstract.flush();
     }
 
     public void delete(long id){
-        database.deleteUser(id);
-    }
-
-    private boolean isIdExists(long id) {
-        for (var user : database.getUsers()) {
-            if (user.getUserId() == id) {
-                return true;
-            }
-        }
-        return false;
+        userRepositoryAbstract.deleteById(id);
     }
 }

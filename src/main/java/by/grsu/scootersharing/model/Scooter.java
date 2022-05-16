@@ -12,16 +12,24 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
-@Entity
+@Entity(name = "Scooter")
 @Table(name = "scooters")
 public class Scooter {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @SequenceGenerator(
+            name = "scooter_sequence",
+            sequenceName = "scooter_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "scooter_sequence"
+    )
+    @Column(name = "id",updatable = false)
     private long id;
 
-    @OneToOne()
-    @JoinTable(name = "locations",
+    @ManyToOne()
+    @JoinTable(name = "scooters_locations_join",
             joinColumns = {@JoinColumn(name = "scooter_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "location_id", referencedColumnName = "id")})
     private ScooterLocation location;
@@ -29,7 +37,7 @@ public class Scooter {
     @Column(name = "battery",nullable = false)
     private double battery;
 
-    @Column(name = "image_url",nullable = false)
+    @Column(name = "image",nullable = false)
     private String imageUrl;
 
     @Column(name = "model",nullable = false)
@@ -38,8 +46,13 @@ public class Scooter {
     @Column(name = "booked",nullable = false)
     private boolean isBooked = false;
 
-    public Scooter(long id, ScooterLocation location, double battery, String imageUrl, String modelName) {
-        this.id = id;
+    @ManyToOne()
+    @JoinTable(name = "users_scooters_join",
+            joinColumns = {@JoinColumn(name = "scooter_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+    private User user;
+
+    public Scooter(ScooterLocation location, double battery, String imageUrl, String modelName) {
         this.location = location;
         this.battery = battery;
         this.imageUrl = imageUrl;
