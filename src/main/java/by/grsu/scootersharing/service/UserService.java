@@ -1,7 +1,7 @@
 package by.grsu.scootersharing.service;
 
 import by.grsu.scootersharing.dto.UserDto;
-import by.grsu.scootersharing.model.User;
+import by.grsu.scootersharing.model.Person;
 import by.grsu.scootersharing.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,24 +21,24 @@ public class UserService {
         modelMapper = new ModelMapper();
     }
 
-    public List<User> getUsers(){
+    public List<Person> getUsers(){
         return userRepository.getUsers();
     }
 
     public UserDto getUserById(long id){
-        User response = userRepository.getUserById(id);
+        Person response = userRepository.getUserById(id);
         return modelMapper.map(response,UserDto.class);
     }
 
     public UserDto create(UserDto dto){
-        User user = modelMapper.map(dto,User.class);
-        User response = userRepository.create(user);
+        Person person = modelMapper.map(dto, Person.class);
+        Person response = userRepository.create(person);
         return modelMapper.map(response,UserDto.class);
     }
 
     public void update(UserDto dto){
-        User user = modelMapper.map(dto,User.class);
-        userRepository.update(user);
+        Person person = modelMapper.map(dto, Person.class);
+        userRepository.update(person);
     }
 
     public void delete(long id){

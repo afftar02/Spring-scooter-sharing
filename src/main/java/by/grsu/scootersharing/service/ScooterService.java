@@ -1,9 +1,7 @@
 package by.grsu.scootersharing.service;
 
 import by.grsu.scootersharing.dto.ScooterDto;
-import by.grsu.scootersharing.dto.UserDto;
 import by.grsu.scootersharing.model.Scooter;
-import by.grsu.scootersharing.model.User;
 import by.grsu.scootersharing.repository.ScooterRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -12,8 +14,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
-@Entity(name = "Scooter")
-@Table(name = "scooters")
+@Entity
 public class Scooter {
     @Id
     @SequenceGenerator(
@@ -25,34 +26,30 @@ public class Scooter {
             strategy = GenerationType.SEQUENCE,
             generator = "scooter_sequence"
     )
-    @Column(name = "id",updatable = false)
-    private long id;
+    @Column(updatable = false)
+    private Long id;
 
-    @ManyToOne()
-    @JoinTable(name = "scooters_locations_join",
-            joinColumns = {@JoinColumn(name = "scooter_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "location_id", referencedColumnName = "id")})
-    private ScooterLocation location;
+    @ManyToOne
+    @JoinColumn(name = "location_id", nullable = false)
+    private Location location;
 
-    @Column(name = "battery",nullable = false)
+    @Column(nullable = false)
     private double battery;
 
-    @Column(name = "image",nullable = false)
+    @Column(nullable = false)
     private String imageUrl;
 
-    @Column(name = "model",nullable = false)
+    @Column(nullable = false)
     private String modelName;
 
-    @Column(name = "booked",nullable = false)
+    @Column(nullable = false)
     private boolean isBooked = false;
 
-    @ManyToOne()
-    @JoinTable(name = "users_scooters_join",
-            joinColumns = {@JoinColumn(name = "scooter_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
-    private User user;
+    @ManyToOne
+    @JoinColumn(name = "person_id", nullable = false)
+    private Person person;
 
-    public Scooter(ScooterLocation location, double battery, String imageUrl, String modelName) {
+    public Scooter(Location location, double battery, String imageUrl, String modelName) {
         this.location = location;
         this.battery = battery;
         this.imageUrl = imageUrl;

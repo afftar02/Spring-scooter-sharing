@@ -1,7 +1,7 @@
 package by.grsu.scootersharing.controller;
 
 import by.grsu.scootersharing.dto.UserDto;
-import by.grsu.scootersharing.model.User;
+import by.grsu.scootersharing.model.Person;
 import by.grsu.scootersharing.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsers() {
+    public List<Person> getUsers() {
         return userService.getUsers();
     }
 

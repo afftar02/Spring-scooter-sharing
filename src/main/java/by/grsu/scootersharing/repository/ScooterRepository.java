@@ -3,7 +3,7 @@ package by.grsu.scootersharing.repository;
 import by.grsu.scootersharing.api.repository.LocationRepositoryAbstract;
 import by.grsu.scootersharing.api.repository.ScooterRepositoryAbstract;
 import by.grsu.scootersharing.model.Scooter;
-import by.grsu.scootersharing.model.ScooterLocation;
+import by.grsu.scootersharing.model.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +29,7 @@ public class ScooterRepository {
     }
 
     public Scooter create(Scooter scooter){
-        ScooterLocation locationWithId = locationRepositoryAbstract.save(scooter.getLocation());
+        Location locationWithId = locationRepositoryAbstract.save(scooter.getLocation());
         scooter.setLocation(locationWithId);
         return scooterRepositoryAbstract.save(scooter);
     }

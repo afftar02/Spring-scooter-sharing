@@ -6,16 +6,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@Entity(name = "Location")
-@Table(name = "locations")
-public class ScooterLocation {
+@Entity
+public class Location {
     @Id
     @SequenceGenerator(
             name = "location_sequence",
@@ -26,16 +24,16 @@ public class ScooterLocation {
             strategy = GenerationType.SEQUENCE,
             generator = "location_sequence"
     )
-    @Column(name = "id",updatable = false)
-    private long id;
+    @Column(updatable = false)
+    private Long id;
 
-    @Column(name = "name",nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "description",columnDefinition = "TEXT",nullable = false)
+    @Column(columnDefinition = "TEXT",nullable = false)
     private String description;
 
-    public ScooterLocation(String name, String description) {
+    public Location(String name, String description) {
         this.name = name;
         this.description = description;
     }
@@ -44,7 +42,7 @@ public class ScooterLocation {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ScooterLocation that = (ScooterLocation) o;
+        Location that = (Location) o;
         return Objects.equals(name, that.name) && Objects.equals(description, that.description);
     }
 
