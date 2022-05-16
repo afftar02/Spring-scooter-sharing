@@ -35,6 +35,10 @@ public class ScooterRepository {
     }
 
     public void updateScooter(Scooter scooter){
+        locationRepositoryAbstract.getById(scooter.getLocation().getId()).setName(scooter.getLocation().getName());
+        locationRepositoryAbstract.getById(scooter.getLocation().getId()).setDescription(scooter.getLocation().getDescription());
+        locationRepositoryAbstract.flush();
+
         scooterRepositoryAbstract.getById(scooter.getId()).setLocation(scooter.getLocation());
         scooterRepositoryAbstract.getById(scooter.getId()).setBattery(scooter.getBattery());
         scooterRepositoryAbstract.getById(scooter.getId()).setImageUrl(scooter.getImageUrl());

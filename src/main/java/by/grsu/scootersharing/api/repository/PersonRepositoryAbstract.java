@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepositoryAbstract extends JpaRepository<Person,Long> {
+public interface PersonRepositoryAbstract extends JpaRepository<Person,Long> {
 
 //    public List<User> getUsers(){
 //        return database.getUsers();

@@ -46,7 +46,7 @@ public class Scooter {
     private boolean isBooked = false;
 
     @ManyToOne
-    @JoinColumn(name = "person_id", nullable = false)
+    @JoinColumn(name = "person_id")
     private Person person;
 
     public Scooter(Location location, double battery, String imageUrl, String modelName) {

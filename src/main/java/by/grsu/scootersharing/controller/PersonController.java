@@ -1,8 +1,8 @@
 package by.grsu.scootersharing.controller;
 
-import by.grsu.scootersharing.dto.UserDto;
+import by.grsu.scootersharing.dto.PersonDto;
 import by.grsu.scootersharing.model.Person;
-import by.grsu.scootersharing.service.UserService;
+import by.grsu.scootersharing.service.PersonService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,29 +14,29 @@ import java.util.logging.Logger;
 @RestController
 @CrossOrigin
 @RequestMapping("scooter-sharing/api/user")
-public class UserController {
+public class PersonController {
 
-    private final UserService userService;
+    private final PersonService personService;
     private final ObjectMapper mapper;
-    private static final Logger logger = Logger.getLogger(UserController.class.toString());
+    private static final Logger logger = Logger.getLogger(PersonController.class.toString());
 
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public PersonController(PersonService personService) {
+        this.personService = personService;
         this.mapper = new ObjectMapper();
     }
 
     @GetMapping
-    public List<Person> getUsers() {
-        return userService.getUsers();
+    public List<Person> getPersons() {
+        return personService.getPersons();
     }
 
-    @GetMapping("/{userId}")
-    public String getUserById(@PathVariable String userId){
+    @GetMapping("/{personId}")
+    public String getPersonById(@PathVariable String personId){
         try {
-            long id = Long.parseLong(userId);
-            return mapper.writeValueAsString(userService.getUserById(id));
+            long id = Long.parseLong(personId);
+            return mapper.writeValueAsString(personService.getPersonById(id));
         } catch (JsonProcessingException e) {
             logger.info("Exception json processing " + e.getMessage());
             throw new RuntimeException(e);
@@ -44,10 +44,10 @@ public class UserController {
     }
 
     @PostMapping
-    public String addUser(@RequestBody String requestJson) {
+    public String addPerson(@RequestBody String requestJson) {
         try {
-            UserDto dto = mapper.readValue(requestJson, UserDto.class);
-            UserDto response = userService.create(dto);
+            PersonDto dto = mapper.readValue(requestJson, PersonDto.class);
+            PersonDto response = personService.create(dto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
             logger.info("Exception json processing " + e.getMessage());
@@ -58,8 +58,8 @@ public class UserController {
     @PutMapping
     public void update(@RequestBody String requestJson) {
         try {
-            UserDto dto = mapper.readValue(requestJson, UserDto.class);
-            userService.update(dto);
+            PersonDto dto = mapper.readValue(requestJson, PersonDto.class);
+            personService.update(dto);
         } catch (JsonProcessingException e) {
             logger.info("Exception json processing " + e.getMessage());
             throw new RuntimeException(e);
@@ -68,6 +68,6 @@ public class UserController {
 
     @DeleteMapping
     public void delete(@RequestBody long id){
-        userService.delete(id);
+        personService.delete(id);
     }
 }

@@ -1,6 +1,7 @@
 package by.grsu.scootersharing.dto;
 
 import by.grsu.scootersharing.model.Location;
+import by.grsu.scootersharing.model.Person;
 import lombok.Data;
 
 @Data
@@ -10,5 +11,6 @@ public class ScooterDto {
     public double battery;
     public String imageUrl;
     public String modelName;
-    public boolean isBooked = false;
+    public boolean booked = false;
+    public Person person;
 }

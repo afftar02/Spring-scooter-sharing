@@ -1,7 +1,6 @@
 package by.grsu.scootersharing.controller;
 
 import by.grsu.scootersharing.dto.ScooterDto;
-import by.grsu.scootersharing.dto.UserDto;
 import by.grsu.scootersharing.model.Scooter;
 import by.grsu.scootersharing.service.ScooterService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,7 +18,7 @@ public class ScooterController {
 
     private final ScooterService scooterService;
     private final ObjectMapper mapper;
-    private static final Logger logger = Logger.getLogger(UserController.class.toString());
+    private static final Logger logger = Logger.getLogger(PersonController.class.toString());
 
     @Autowired
     public ScooterController(ScooterService scooterService, ObjectMapper mapper) {
