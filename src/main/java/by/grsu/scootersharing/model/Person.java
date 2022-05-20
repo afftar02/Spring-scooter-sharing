@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -29,6 +30,10 @@ public class Person {
 
     @Column( nullable = false)
     private String password;
+
+    @OneToMany
+    @JoinColumn(name = "person_id")
+    private List<Scooter> scooters;
 
     @Override
     public boolean equals(Object o) {

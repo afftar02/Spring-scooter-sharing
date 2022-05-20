@@ -1,6 +1,7 @@
 package by.grsu.scootersharing.repository;
 
 import by.grsu.scootersharing.api.repository.LocationRepositoryAbstract;
+import by.grsu.scootersharing.api.repository.PersonRepositoryAbstract;
 import by.grsu.scootersharing.api.repository.ScooterRepositoryAbstract;
 import by.grsu.scootersharing.model.Scooter;
 import by.grsu.scootersharing.model.Location;
@@ -35,15 +36,23 @@ public class ScooterRepository {
     }
 
     public void updateScooter(Scooter scooter){
-        locationRepositoryAbstract.getById(scooter.getLocation().getId()).setName(scooter.getLocation().getName());
-        locationRepositoryAbstract.getById(scooter.getLocation().getId()).setDescription(scooter.getLocation().getDescription());
-        locationRepositoryAbstract.flush();
+        if(scooter.getLocation() != null){
+            locationRepositoryAbstract.getById(scooter.getLocation().getId()).setName(scooter.getLocation().getName());
+            locationRepositoryAbstract.getById(scooter.getLocation().getId()).setDescription(scooter.getLocation().getDescription());
+            locationRepositoryAbstract.flush();
+            scooterRepositoryAbstract.getById(scooter.getId()).setLocation(scooter.getLocation());
+        }
 
-        scooterRepositoryAbstract.getById(scooter.getId()).setLocation(scooter.getLocation());
         scooterRepositoryAbstract.getById(scooter.getId()).setBattery(scooter.getBattery());
-        scooterRepositoryAbstract.getById(scooter.getId()).setImageUrl(scooter.getImageUrl());
-        scooterRepositoryAbstract.getById(scooter.getId()).setModelName(scooter.getModelName());
-        scooterRepositoryAbstract.getById(scooter.getId()).setBooked(scooter.isBooked());
+        if(scooter.getImageUrl() != null){
+            scooterRepositoryAbstract.getById(scooter.getId()).setImageUrl(scooter.getImageUrl());
+        }
+        if(scooter.getModelName() != null){
+            scooterRepositoryAbstract.getById(scooter.getId()).setModelName(scooter.getModelName());
+        }
+        if(scooter.isBooked() != scooterRepositoryAbstract.getById(scooter.getId()).isBooked()){
+            scooterRepositoryAbstract.getById(scooter.getId()).setBooked(scooter.isBooked());
+        }
         scooterRepositoryAbstract.flush();
     }
 

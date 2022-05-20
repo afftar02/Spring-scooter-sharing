@@ -29,10 +29,21 @@ public class PersonRepository {
     }
 
     public void update(Person person){
-        personRepositoryAbstract.getById(person.getId()).setFirstName(person.getFirstName());
-        personRepositoryAbstract.getById(person.getId()).setSecondName(person.getSecondName());
-        personRepositoryAbstract.getById(person.getId()).setEmail(person.getEmail());
-        personRepositoryAbstract.getById(person.getId()).setPassword(person.getPassword());
+        if(person.getFirstName() != null){
+            personRepositoryAbstract.getById(person.getId()).setFirstName(person.getFirstName());
+        }
+        if(person.getSecondName() != null){
+            personRepositoryAbstract.getById(person.getId()).setSecondName(person.getSecondName());
+        }
+        if(person.getEmail() != null){
+            personRepositoryAbstract.getById(person.getId()).setEmail(person.getEmail());
+        }
+        if(person.getPassword() != null){
+            personRepositoryAbstract.getById(person.getId()).setPassword(person.getPassword());
+        }
+        if(person.getScooters() != null){
+            personRepositoryAbstract.getById(person.getId()).setScooters(person.getScooters());
+        }
         personRepositoryAbstract.flush();
     }
 

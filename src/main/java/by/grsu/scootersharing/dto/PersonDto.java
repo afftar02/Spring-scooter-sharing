@@ -12,4 +12,5 @@ public class PersonDto {
     public String secondName;
     public String email;
     public String password;
+    public List<Scooter> scooters;
 }

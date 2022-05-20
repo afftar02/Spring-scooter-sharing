@@ -45,10 +45,6 @@ public class Scooter {
     @Column(nullable = false)
     private boolean isBooked = false;
 
-    @ManyToOne
-    @JoinColumn(name = "person_id")
-    private Person person;
-
     public Scooter(Location location, double battery, String imageUrl, String modelName) {
         this.location = location;
         this.battery = battery;
