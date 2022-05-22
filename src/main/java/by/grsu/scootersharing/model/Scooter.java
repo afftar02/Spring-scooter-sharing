@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -45,19 +43,18 @@ public class Scooter {
     @Column(nullable = false)
     private boolean isBooked = false;
 
-    public Scooter(Location location, double battery, String imageUrl, String modelName) {
-        this.location = location;
-        this.battery = battery;
-        this.imageUrl = imageUrl;
-        this.modelName = modelName;
-    }
+//    @Column
+//    private boolean isMinTimeUnit = false;
+//
+//    @Column
+//    private int timeLeft;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Scooter scooter = (Scooter) o;
-        return id == scooter.id && Double.compare(scooter.battery, battery) == 0 && isBooked == scooter.isBooked && location.equals(scooter.location) && imageUrl.equals(scooter.imageUrl) && modelName.equals(scooter.modelName);
+        return Double.compare(scooter.battery, battery) == 0 && isBooked == scooter.isBooked && id.equals(scooter.id) && location.equals(scooter.location) && imageUrl.equals(scooter.imageUrl) && modelName.equals(scooter.modelName);
     }
 
     @Override

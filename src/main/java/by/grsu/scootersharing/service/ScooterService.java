@@ -39,9 +39,16 @@ public class ScooterService {
     public void updateScooter(ScooterDto dto){
         Scooter scooter = modelMapper.map(dto,Scooter.class);
         scooterRepository.updateScooter(scooter);
+//        if(dto.getTimeLeft() > 0){
+//            startTimer(dto.getId(),dto.isMinTimeUnit(),dto.getTimeLeft());
+//        }
     }
 
     public void delete(long id){
         scooterRepository.delete(id);
+    }
+
+    public void startTimer(long id,boolean isMinTimeUnit,int duration){
+
     }
 }

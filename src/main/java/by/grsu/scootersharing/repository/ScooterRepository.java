@@ -37,13 +37,13 @@ public class ScooterRepository {
 
     public void updateScooter(Scooter scooter){
         if(scooter.getLocation() != null){
-            locationRepositoryAbstract.getById(scooter.getLocation().getId()).setName(scooter.getLocation().getName());
-            locationRepositoryAbstract.getById(scooter.getLocation().getId()).setDescription(scooter.getLocation().getDescription());
-            locationRepositoryAbstract.flush();
+            locationRepositoryAbstract.saveAndFlush(scooter.getLocation());
             scooterRepositoryAbstract.getById(scooter.getId()).setLocation(scooter.getLocation());
         }
 
-        scooterRepositoryAbstract.getById(scooter.getId()).setBattery(scooter.getBattery());
+        if(scooter.getBattery() != 0){
+            scooterRepositoryAbstract.getById(scooter.getId()).setBattery(scooter.getBattery());
+        }
         if(scooter.getImageUrl() != null){
             scooterRepositoryAbstract.getById(scooter.getId()).setImageUrl(scooter.getImageUrl());
         }

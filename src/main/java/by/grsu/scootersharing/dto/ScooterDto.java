@@ -1,7 +1,6 @@
 package by.grsu.scootersharing.dto;
 
 import by.grsu.scootersharing.model.Location;
-import by.grsu.scootersharing.model.Person;
 import lombok.Data;
 
 @Data
@@ -12,4 +11,6 @@ public class ScooterDto {
     public String imageUrl;
     public String modelName;
     public boolean booked = false;
+//    public boolean isMinTimeUnit;
+//    public int timeLeft;
 }
