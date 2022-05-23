@@ -30,6 +30,11 @@ public class PersonService {
         return modelMapper.map(response, PersonDto.class);
     }
 
+    public PersonDto getPersonByEmail(String email){
+        Person response = personRepository.getPersonByEmail(email);
+        return modelMapper.map(response, PersonDto.class);
+    }
+
     public PersonDto create(PersonDto dto){
         Person person = modelMapper.map(dto, Person.class);
         Person response = personRepository.create(person);

@@ -24,6 +24,10 @@ public class PersonRepository {
         return personRepositoryAbstract.getById(id);
     }
 
+    public Person getPersonByEmail(String email){
+        return personRepositoryAbstract.getByEmail(email);
+    }
+
     public Person create(Person person){
         return personRepositoryAbstract.save(person);
     }

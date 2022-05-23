@@ -43,6 +43,16 @@ public class PersonController {
         }
     }
 
+    @GetMapping("/email")
+    public String getPersonByEmail(@RequestParam String email){
+        try {
+            return mapper.writeValueAsString(personService.getPersonByEmail(email));
+        } catch (JsonProcessingException e) {
+            logger.info("Exception json processing " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
     @PostMapping
     public String addPerson(@RequestBody String requestJson) {
         try {

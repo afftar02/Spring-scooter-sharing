@@ -6,25 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PersonRepositoryAbstract extends JpaRepository<Person,Long> {
+    Person getByEmail(String email);
 
-//    public List<User> getUsers(){
-//        return database.getUsers();
-//    }
-//
-//    public User create(User user){
-//        User newUser = new User(user);
-//        database.addUser(newUser);
-//        return newUser;
-//    }
-//
-//    public void update(User user){
-//        database.updateUser(user);
-//    }
-//
-//    public void delete(long id){
-//        database.deleteUser(id);
-//    }
-//
 //    private boolean isIdExists(long id) {
 //        for (var user : database.getUsers()) {
 //            if (user.getId() == id) {
