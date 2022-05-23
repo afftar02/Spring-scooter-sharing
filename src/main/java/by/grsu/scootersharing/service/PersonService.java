@@ -5,12 +5,18 @@ import by.grsu.scootersharing.model.Person;
 import by.grsu.scootersharing.repository.PersonRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
-public class PersonService {
+public class PersonService implements UserDetailsService {
 
     private final PersonRepository personRepository;
     private final ModelMapper modelMapper;
@@ -19,6 +25,17 @@ public class PersonService {
     public PersonService(PersonRepository personRepository){
         this.personRepository = personRepository;
         modelMapper = new ModelMapper();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Person person = personRepository.getPersonByEmail(email);
+        if(person == null){
+            throw new UsernameNotFoundException("User not found in the database");
+        }
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("User"));
+        return new org.springframework.security.core.userdetails.User(person.getEmail(),person.getPassword(), authorities);
     }
 
     public List<Person> getPersons(){
@@ -50,4 +67,5 @@ public class PersonService {
     public void delete(long id){
         personRepository.delete(id);
     }
+
 }

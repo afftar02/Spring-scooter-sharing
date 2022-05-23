@@ -13,4 +13,5 @@ public class PersonDto {
     public String email;
     public String password;
     public List<Scooter> scooters;
+    private String role = "User";
 }

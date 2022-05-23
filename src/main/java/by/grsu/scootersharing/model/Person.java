@@ -35,6 +35,9 @@ public class Person {
     @JoinColumn(name = "person_id")
     private List<Scooter> scooters;
 
+    @Column(nullable = false)
+    private String role = "User";
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
