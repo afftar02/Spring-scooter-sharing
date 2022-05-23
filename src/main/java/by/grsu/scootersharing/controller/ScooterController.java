@@ -3,13 +3,14 @@ package by.grsu.scootersharing.controller;
 import by.grsu.scootersharing.dto.ScooterDto;
 import by.grsu.scootersharing.model.Scooter;
 import by.grsu.scootersharing.service.ScooterService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
-import java.util.logging.Logger;
 
 @RestController
 @CrossOrigin
@@ -17,56 +18,37 @@ import java.util.logging.Logger;
 public class ScooterController {
 
     private final ScooterService scooterService;
-    private final ObjectMapper mapper;
-    private static final Logger logger = Logger.getLogger(PersonController.class.toString());
 
     @Autowired
-    public ScooterController(ScooterService scooterService, ObjectMapper mapper) {
+    public ScooterController(ScooterService scooterService) {
         this.scooterService = scooterService;
-        this.mapper = mapper;
     }
 
     @GetMapping
-    public List<Scooter> getScooters(){
-        return scooterService.getScooters();
+    public ResponseEntity<List<Scooter>> getScooters(){
+        return ResponseEntity.ok().body(scooterService.getScooters());
     }
 
     @GetMapping("/{scooterId}")
-    public String getScooterById(@PathVariable String scooterId){
-        try {
-            long id = Long.parseLong(scooterId);
-            return mapper.writeValueAsString(scooterService.getScooterById(id));
-        } catch (JsonProcessingException e) {
-            logger.info("Exception json processing " + e.getMessage());
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity<ScooterDto> getScooterById(@PathVariable String scooterId){
+        long id = Long.parseLong(scooterId);
+        return ResponseEntity.ok().body(scooterService.getScooterById(id));
     }
 
-    @PostMapping
-    public String addScooter(@RequestBody String requestJson){
-        try {
-            ScooterDto dto = mapper.readValue(requestJson, ScooterDto.class);
-            ScooterDto response = scooterService.create(dto);
-            return mapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            logger.info("Exception json processing " + e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PostMapping("/create")
+    public ResponseEntity<ScooterDto> addScooter(@RequestBody ScooterDto dto){
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("scooter-sharing/api/scooters/create").toUriString());
+        return ResponseEntity.created(uri).body(scooterService.create(dto));
     }
 
-    @PutMapping
-    public void updateScooter(@RequestBody String requestJson){
-        try {
-            ScooterDto dto = mapper.readValue(requestJson, ScooterDto.class);
-            scooterService.updateScooter(dto);
-        } catch (JsonProcessingException e) {
-            logger.info("Exception json processing " + e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PutMapping("/update")
+    public ResponseEntity<ScooterDto> updateScooter(@RequestBody ScooterDto dto){
+        return ResponseEntity.ok().body(scooterService.updateScooter(dto));
     }
 
-    @DeleteMapping
-    public void delete(@RequestBody long id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<HttpStatus> delete(@PathVariable long id){
         scooterService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -32,7 +32,7 @@ public class PersonRepository {
         return personRepositoryAbstract.save(person);
     }
 
-    public void update(Person person){
+    public Person update(Person person){
         if(person.getFirstName() != null){
             personRepositoryAbstract.getById(person.getId()).setFirstName(person.getFirstName());
         }
@@ -49,6 +49,7 @@ public class PersonRepository {
             personRepositoryAbstract.getById(person.getId()).setScooters(person.getScooters());
         }
         personRepositoryAbstract.flush();
+        return personRepositoryAbstract.getById(person.getId());
     }
 
     public void delete(long id){

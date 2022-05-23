@@ -41,9 +41,10 @@ public class PersonService {
         return modelMapper.map(response, PersonDto.class);
     }
 
-    public void update(PersonDto dto){
+    public PersonDto update(PersonDto dto){
         Person person = modelMapper.map(dto, Person.class);
-        personRepository.update(person);
+        Person response = personRepository.update(person);
+        return modelMapper.map(response, PersonDto.class);
     }
 
     public void delete(long id){

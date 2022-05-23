@@ -35,7 +35,7 @@ public class ScooterRepository {
         return scooterRepositoryAbstract.save(scooter);
     }
 
-    public void updateScooter(Scooter scooter){
+    public Scooter updateScooter(Scooter scooter){
         if(scooter.getLocation() != null){
             locationRepositoryAbstract.saveAndFlush(scooter.getLocation());
             scooterRepositoryAbstract.getById(scooter.getId()).setLocation(scooter.getLocation());
@@ -54,6 +54,7 @@ public class ScooterRepository {
             scooterRepositoryAbstract.getById(scooter.getId()).setBooked(scooter.isBooked());
         }
         scooterRepositoryAbstract.flush();
+        return scooterRepositoryAbstract.getById(scooter.getId());
     }
 
     public void delete(long id){

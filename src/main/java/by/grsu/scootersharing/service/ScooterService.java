@@ -36,9 +36,10 @@ public class ScooterService {
         return modelMapper.map(response,ScooterDto.class);
     }
 
-    public void updateScooter(ScooterDto dto){
+    public ScooterDto updateScooter(ScooterDto dto){
         Scooter scooter = modelMapper.map(dto,Scooter.class);
-        scooterRepository.updateScooter(scooter);
+        Scooter response = scooterRepository.updateScooter(scooter);
+        return modelMapper.map(response,ScooterDto.class);
 //        if(dto.getTimeLeft() > 0){
 //            startTimer(dto.getId(),dto.isMinTimeUnit(),dto.getTimeLeft());
 //        }
