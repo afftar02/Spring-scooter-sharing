@@ -37,7 +37,9 @@ public class PersonService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found in the database");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("User"));
+        person.getRoles().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        });
         return new org.springframework.security.core.userdetails.User(person.getUsername(),person.getPassword(), authorities);
     }
 

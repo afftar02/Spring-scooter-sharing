@@ -1,19 +1,25 @@
 package by.grsu.scootersharing.repository;
 
 import by.grsu.scootersharing.api.repository.PersonRepositoryAbstract;
+import by.grsu.scootersharing.api.repository.RoleRepositoryAbstract;
 import by.grsu.scootersharing.model.Person;
+import by.grsu.scootersharing.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
 public class PersonRepository {
     private final PersonRepositoryAbstract personRepositoryAbstract;
+    private final RoleRepositoryAbstract roleRepositoryAbstract;
 
     @Autowired
-    public PersonRepository(PersonRepositoryAbstract personRepositoryAbstract) {
+    public PersonRepository(PersonRepositoryAbstract personRepositoryAbstract, RoleRepositoryAbstract roleRepositoryAbstract) {
         this.personRepositoryAbstract = personRepositoryAbstract;
+        this.roleRepositoryAbstract = roleRepositoryAbstract;
     }
 
     public List<Person> getPersons(){
@@ -29,6 +35,11 @@ public class PersonRepository {
     }
 
     public Person create(Person person){
+        Collection<Role> rolesWithId = new ArrayList<>();
+        for (Role role: person.getRoles()) {
+            rolesWithId.add(roleRepositoryAbstract.save(role));
+        }
+        person.setRoles(rolesWithId);
         return personRepositoryAbstract.save(person);
     }
 

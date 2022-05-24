@@ -36,24 +36,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        //delete this region in future
-        http.authorizeRequests().anyRequest().permitAll();
+//        delete this region in future
+//        http.authorizeRequests().anyRequest().permitAll();
 
-//        http.authorizeRequests().antMatchers("/login").permitAll();
+        http.authorizeRequests().antMatchers("/scooter-sharing/api/login/**", "/scooter-sharing/api/token/refresh/**", "/scooter-sharing/api/user/create/**").permitAll();
 
-//        http.authorizeRequests().antMatchers(GET, "scooter-sharing/api/scooters/**").hasAnyAuthority("ROLE_USER");
-//        http.authorizeRequests().antMatchers(POST,"scooter-sharing/api/scooters/create/**").hasAnyAuthority("ROLE_ADMIN");
-//        http.authorizeRequests().antMatchers(PUT, "scooter-sharing/api/scooters/update/**").hasAnyAuthority("ROLE_USER");
-//        http.authorizeRequests().antMatchers(DELETE,"scooter-sharing/api/scooters/delete/**").hasAnyAuthority("ROLE_ADMIN");
-//
-//        http.authorizeRequests().antMatchers(GET, "scooter-sharing/api/user/**").hasAnyAuthority("ROLE_USER");
-//        http.authorizeRequests().antMatchers(POST, "scooter-sharing/api/user/create/**").hasAnyAuthority("ROLE_USER");
-//        http.authorizeRequests().antMatchers(PUT, "scooter-sharing/api/user/update/**").hasAnyAuthority("ROLE_USER");
-//        http.authorizeRequests().antMatchers(DELETE, "scooter-sharing/api/user/delete/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(GET, "/scooter-sharing/api/scooters/**").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(POST,"/scooter-sharing/api/scooters/create/**").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(PUT, "/scooter-sharing/api/scooters/update/**").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(DELETE,"/scooter-sharing/api/scooters/delete/**").hasAnyAuthority("Admin");
 
-//        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers(GET, "/scooter-sharing/api/user/**").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(PUT, "/scooter-sharing/api/user/update/**").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(DELETE, "/scooter-sharing/api/user/delete/**").hasAnyAuthority("Admin");
+
+        http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
-//        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
