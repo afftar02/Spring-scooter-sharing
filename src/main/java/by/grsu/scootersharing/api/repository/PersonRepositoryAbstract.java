@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PersonRepositoryAbstract extends JpaRepository<Person,Long> {
-    Person getByEmail(String email);
+    Person getByUsername(String username);
 
 //    private boolean isIdExists(long id) {
 //        for (var user : database.getUsers()) {

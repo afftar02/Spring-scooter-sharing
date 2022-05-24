@@ -35,9 +35,9 @@ public class PersonController {
         return ResponseEntity.ok().body(personService.getPersonById(id));
     }
 
-    @GetMapping("/email")
-    public ResponseEntity<PersonDto> getPersonByEmail(@RequestParam String email){
-        return ResponseEntity.ok().body(personService.getPersonByEmail(email));
+    @GetMapping("/username")
+    public ResponseEntity<PersonDto> getPersonByEmail(@RequestParam String username){
+        return ResponseEntity.ok().body(personService.getPersonByUsername(username));
     }
 
     @PostMapping("/create")

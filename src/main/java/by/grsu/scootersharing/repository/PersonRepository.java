@@ -24,8 +24,8 @@ public class PersonRepository {
         return personRepositoryAbstract.getById(id);
     }
 
-    public Person getPersonByEmail(String email){
-        return personRepositoryAbstract.getByEmail(email);
+    public Person getPersonByUsername(String username){
+        return personRepositoryAbstract.getByUsername(username);
     }
 
     public Person create(Person person){
@@ -39,8 +39,8 @@ public class PersonRepository {
         if(person.getSecondName() != null){
             personRepositoryAbstract.getById(person.getId()).setSecondName(person.getSecondName());
         }
-        if(person.getEmail() != null){
-            personRepositoryAbstract.getById(person.getId()).setEmail(person.getEmail());
+        if(person.getUsername() != null){
+            personRepositoryAbstract.getById(person.getId()).setUsername(person.getUsername());
         }
         if(person.getPassword() != null){
             personRepositoryAbstract.getById(person.getId()).setPassword(person.getPassword());

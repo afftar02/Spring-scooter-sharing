@@ -26,28 +26,28 @@ public class Person {
     private String secondName;
 
     @Column(nullable = false)
-    private String email;
+    private String username;
 
     @Column( nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String role = "User";
+
     @OneToMany
     @JoinColumn(name = "person_id")
     private List<Scooter> scooters;
-
-    @Column(nullable = false)
-    private String role = "User";
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return id == person.id && firstName.equals(person.firstName) && secondName.equals(person.secondName) && email.equals(person.email) && password.equals(person.password);
+        return id.equals(person.id) && firstName.equals(person.firstName) && secondName.equals(person.secondName) && username.equals(person.username) && password.equals(person.password) && role.equals(person.role) && Objects.equals(scooters, person.scooters);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, secondName, email, password);
+        return Objects.hash(id, firstName, secondName, username, password, role, scooters);
     }
 }
