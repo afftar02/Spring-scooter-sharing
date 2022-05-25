@@ -8,7 +8,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,16 +28,19 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@Slf4j
 @RestController
 @CrossOrigin
 @RequestMapping("scooter-sharing/api")
 public class PersonController {
 
     private final PersonService personService;
+    private final ObjectMapper mapper;
 
     @Autowired
-    public PersonController(PersonService personService) {
+    public PersonController(PersonService personService, ObjectMapper mapper) {
         this.personService = personService;
+        this.mapper = mapper;
     }
 
     @GetMapping("/user")
@@ -55,14 +60,26 @@ public class PersonController {
     }
 
     @PostMapping("/user/create")
-    public ResponseEntity<PersonDto> addPerson(@RequestBody PersonDto dto) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("scooter-sharing/api/user/create").toUriString());
-        return ResponseEntity.created(uri).body(personService.create(dto));
+    public ResponseEntity<PersonDto> addPerson(@RequestBody String requestJson) {
+        try {
+            PersonDto dto = mapper.readValue(requestJson, PersonDto.class);
+            URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("scooter-sharing/api/user/create").toUriString());
+            return ResponseEntity.created(uri).body(personService.create(dto));
+        } catch (JsonProcessingException e) {
+            log.info("Exception json processing "+e.getMessage());
+            throw new RuntimeException();
+        }
     }
 
     @PutMapping("/user/update")
-    public ResponseEntity<PersonDto> update(@RequestBody PersonDto dto) {
-        return ResponseEntity.ok().body(personService.update(dto));
+    public ResponseEntity<PersonDto> update(@RequestBody String requestJson) {
+        try {
+            PersonDto dto = mapper.readValue(requestJson, PersonDto.class);
+            return ResponseEntity.ok().body(personService.update(dto));
+        } catch (JsonProcessingException e) {
+            log.info("Exception json processing "+e.getMessage());
+            throw new RuntimeException();
+        }
     }
 
     @DeleteMapping("/user/delete/{id}")

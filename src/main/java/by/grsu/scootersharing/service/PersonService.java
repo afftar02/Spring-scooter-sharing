@@ -66,7 +66,9 @@ public class PersonService implements UserDetailsService {
 
     public PersonDto update(PersonDto dto){
         Person person = modelMapper.map(dto, Person.class);
-        person.setPassword(passwordEncoder.encode(person.getPassword()));
+        if(person.getPassword() != null){
+            person.setPassword(passwordEncoder.encode(person.getPassword()));
+        }
         Person response = personRepository.update(person);
         return modelMapper.map(response, PersonDto.class);
     }
