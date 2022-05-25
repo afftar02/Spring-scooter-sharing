@@ -37,7 +37,12 @@ public class PersonRepository {
     public Person create(Person person){
         Collection<Role> rolesWithId = new ArrayList<>();
         for (Role role: person.getRoles()) {
-            rolesWithId.add(roleRepositoryAbstract.save(role));
+            if(roleRepositoryAbstract.getByName(role.getName()) != null) {
+                rolesWithId.add(roleRepositoryAbstract.getByName(role.getName()));
+            }
+            else{
+                rolesWithId.add(roleRepositoryAbstract.save(role));
+            }
         }
         person.setRoles(rolesWithId);
         return personRepositoryAbstract.save(person);
