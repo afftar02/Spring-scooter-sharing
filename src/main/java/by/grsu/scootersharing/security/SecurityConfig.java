@@ -14,6 +14,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.Arrays;
 
 import static org.springframework.http.HttpMethod.*;
 
@@ -33,7 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
         customAuthenticationFilter.setFilterProcessesUrl("/scooter-sharing/api/login");
-        http.csrf().disable();
+        http.cors().and().csrf().disable();
+        http.cors().configurationSource(request -> null);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 //        delete this region in future
