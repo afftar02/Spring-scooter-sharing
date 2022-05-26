@@ -14,6 +14,7 @@ public class ScooterService {
 
     private final ScooterRepository scooterRepository;
     private final ModelMapper modelMapper;
+//    private final TimerService timerService;
 
     @Autowired
     public ScooterService(ScooterRepository scooterRepository){
@@ -40,8 +41,11 @@ public class ScooterService {
         Scooter scooter = modelMapper.map(dto,Scooter.class);
         Scooter response = scooterRepository.updateScooter(scooter);
         return modelMapper.map(response,ScooterDto.class);
-//        if(dto.getTimeLeft() > 0){
-//            startTimer(dto.getId(),dto.isMinTimeUnit(),dto.getTimeLeft());
+//        if(dto.booked){
+//            timerService.startTimer(dto.getId(),dto.isMinTimeUnit(),dto.getTimeLeft());
+//        }
+//        else{
+//            timerService.stopTimer(dto.getId());
 //        }
     }
 
@@ -49,7 +53,4 @@ public class ScooterService {
         scooterRepository.delete(id);
     }
 
-    public void startTimer(long id,boolean isMinTimeUnit,int duration){
-
-    }
 }
