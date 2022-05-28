@@ -43,8 +43,8 @@ public class Scooter {
     @Column(nullable = false)
     private boolean isBooked = false;
 
-//    @Column
-//    private int timeLeft;
+    @Column(nullable = false)
+    private int timeLeft;
 
     @Override
     public boolean equals(Object o) {

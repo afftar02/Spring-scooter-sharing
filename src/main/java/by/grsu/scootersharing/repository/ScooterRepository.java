@@ -53,7 +53,7 @@ public class ScooterRepository {
         if(scooter.isBooked() != scooterRepositoryAbstract.getById(scooter.getId()).isBooked()){
             scooterRepositoryAbstract.getById(scooter.getId()).setBooked(scooter.isBooked());
         }
-//        scooterRepositoryAbstract.getById(scooter.getId()).setTimeLeft(scooter.getTimeLeft());
+        scooterRepositoryAbstract.getById(scooter.getId()).setTimeLeft(scooter.getTimeLeft());
         scooterRepositoryAbstract.flush();
         return scooterRepositoryAbstract.getById(scooter.getId());
     }

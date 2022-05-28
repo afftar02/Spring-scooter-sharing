@@ -11,5 +11,5 @@ public class ScooterDto {
     public String imageUrl;
     public String modelName;
     public boolean booked = false;
-//    public int timeLeft;
+    public int timeLeft;
 }
