@@ -11,6 +11,5 @@ public class ScooterDto {
     public String imageUrl;
     public String modelName;
     public boolean booked = false;
-//    public boolean isMinTimeUnit;
 //    public int timeLeft;
 }

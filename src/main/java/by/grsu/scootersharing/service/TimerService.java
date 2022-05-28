@@ -30,10 +30,9 @@
 //        this.scooterTimer =  new Timer();
 //    }
 //
-//    public void startTimer(long id, boolean isMinTimeUnit, int duration) {
-//        duration = isMinTimeUnit ? duration * 60000 : duration * 3600000;
+//    public void startTimer(long id, int duration) {
 //        Scooter currentScooter = scooterRepository.getScooterById(id);
-//        currentScooter.setTimeLeft();
+//        currentScooter.setTimeLeft(duration);
 //        scooterRepository.updateScooter()
 //    }
 //

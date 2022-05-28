@@ -42,7 +42,7 @@ public class ScooterService {
         Scooter response = scooterRepository.updateScooter(scooter);
         return modelMapper.map(response,ScooterDto.class);
 //        if(dto.booked){
-//            timerService.startTimer(dto.getId(),dto.isMinTimeUnit(),dto.getTimeLeft());
+//            timerService.startTimer(dto.getId(),dto.getTimeLeft());
 //        }
 //        else{
 //            timerService.stopTimer(dto.getId());

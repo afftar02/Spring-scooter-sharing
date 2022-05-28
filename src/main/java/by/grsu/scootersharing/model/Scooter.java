@@ -44,9 +44,6 @@ public class Scooter {
     private boolean isBooked = false;
 
 //    @Column
-//    private boolean isMinTimeUnit = false;
-//
-//    @Column
 //    private int timeLeft;
 
     @Override
