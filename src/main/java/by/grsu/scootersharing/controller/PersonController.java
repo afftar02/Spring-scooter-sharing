@@ -58,7 +58,7 @@ public class PersonController {
         return ResponseEntity.ok().body(personService.getPersonByUsername(username));
     }
 
-    @PostMapping("/user/create")
+    @PostMapping("/user")
     public ResponseEntity<PersonDto> addPerson(@RequestBody String requestJson) {
         try {
             PersonDto dto = mapper.readValue(requestJson, PersonDto.class);
@@ -70,7 +70,7 @@ public class PersonController {
         }
     }
 
-    @PutMapping("/user/update")
+    @PutMapping("/user")
     public ResponseEntity<PersonDto> update(@RequestBody String requestJson) {
         try {
             PersonDto dto = mapper.readValue(requestJson, PersonDto.class);
@@ -81,7 +81,7 @@ public class PersonController {
         }
     }
 
-    @DeleteMapping("/user/delete/{id}")
+    @DeleteMapping("/user/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable long id){
         personService.delete(id);
         return ResponseEntity.noContent().build();

@@ -40,7 +40,7 @@ public class ScooterController {
         return ResponseEntity.ok().body(scooterService.getScooterById(id));
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<ScooterDto> addScooter(@RequestBody String requestJson){
         try {
             ScooterDto dto = mapper.readValue(requestJson, ScooterDto.class);
@@ -52,7 +52,7 @@ public class ScooterController {
         }
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public ResponseEntity<ScooterDto> updateScooter(@RequestBody String requestJson){
         try {
             ScooterDto dto = mapper.readValue(requestJson, ScooterDto.class);
@@ -63,7 +63,7 @@ public class ScooterController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable long id){
         scooterService.delete(id);
         return ResponseEntity.noContent().build();
