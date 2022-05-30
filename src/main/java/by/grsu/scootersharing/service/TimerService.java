@@ -30,7 +30,8 @@ public class TimerService {
     public void resetDateTimeEnd(long id) {
         Scooter currentScooter = scooterRepository.getScooterById(id);
         currentScooter.setTimeLeft(0);
-        currentScooter.setDateTimeEnd(new Date());
+        Date currentDate = new Date();
+        currentScooter.setDateTimeEnd(currentDate);
         scooterRepository.updateScooter(currentScooter);
     }
 

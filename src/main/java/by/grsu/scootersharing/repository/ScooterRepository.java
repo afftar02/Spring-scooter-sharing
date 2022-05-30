@@ -36,7 +36,7 @@ public class ScooterRepository {
 
     public Scooter updateScooter(Scooter scooter){
         if(scooter.getLocation() != null){
-            if(locationRepositoryAbstract.getById(scooter.getLocation().getId()) == null){
+            if(scooter.getLocation().getId() == null){
                 locationRepositoryAbstract.saveAndFlush(scooter.getLocation());
             }
             scooterRepositoryAbstract.getById(scooter.getId()).setLocation(scooter.getLocation());
