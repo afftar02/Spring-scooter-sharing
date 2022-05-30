@@ -36,10 +36,11 @@ public class ScooterRepository {
 
     public Scooter updateScooter(Scooter scooter){
         if(scooter.getLocation() != null){
-            locationRepositoryAbstract.saveAndFlush(scooter.getLocation());
+            if(locationRepositoryAbstract.getById(scooter.getLocation().getId()) == null){
+                locationRepositoryAbstract.saveAndFlush(scooter.getLocation());
+            }
             scooterRepositoryAbstract.getById(scooter.getId()).setLocation(scooter.getLocation());
         }
-
         if(scooter.getBattery() != 0){
             scooterRepositoryAbstract.getById(scooter.getId()).setBattery(scooter.getBattery());
         }
@@ -53,6 +54,9 @@ public class ScooterRepository {
             scooterRepositoryAbstract.getById(scooter.getId()).setBooked(scooter.isBooked());
         }
         scooterRepositoryAbstract.getById(scooter.getId()).setTimeLeft(scooter.getTimeLeft());
+        if(scooter.getDateTimeEnd() != null){
+            scooterRepositoryAbstract.getById(scooter.getId()).setDateTimeEnd(scooter.getDateTimeEnd());
+        }
         scooterRepositoryAbstract.flush();
         return scooterRepositoryAbstract.getById(scooter.getId());
     }

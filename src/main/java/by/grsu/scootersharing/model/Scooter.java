@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -44,18 +45,21 @@ public class Scooter {
     private boolean isBooked = false;
 
     @Column(nullable = false)
-    private int timeLeft;
+    private int timeLeft;//in minutes
+
+    @Column
+    private Date dateTimeEnd;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Scooter scooter = (Scooter) o;
-        return Double.compare(scooter.battery, battery) == 0 && isBooked == scooter.isBooked && id.equals(scooter.id) && location.equals(scooter.location) && imageUrl.equals(scooter.imageUrl) && modelName.equals(scooter.modelName);
+        return Double.compare(scooter.battery, battery) == 0 && isBooked == scooter.isBooked && timeLeft == scooter.timeLeft && dateTimeEnd == scooter.dateTimeEnd && id.equals(scooter.id) && location.equals(scooter.location) && imageUrl.equals(scooter.imageUrl) && modelName.equals(scooter.modelName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, location, battery, imageUrl, modelName, isBooked);
+        return Objects.hash(id, location, battery, imageUrl, modelName, isBooked, timeLeft, dateTimeEnd);
     }
 }

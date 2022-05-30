@@ -4,7 +4,6 @@ import by.grsu.scootersharing.dto.ScooterDto;
 import by.grsu.scootersharing.model.Scooter;
 import by.grsu.scootersharing.repository.ScooterRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +13,11 @@ public class ScooterService {
 
     private final ScooterRepository scooterRepository;
     private final ModelMapper modelMapper;
-//    private final TimerService timerService;
+    private final TimerService timerService;
 
-    public ScooterService(ScooterRepository scooterRepository){
+    public ScooterService(ScooterRepository scooterRepository, TimerService timerService){
         this.scooterRepository = scooterRepository;
+        this.timerService = timerService;
         this.modelMapper = new ModelMapper();
     }
 
@@ -39,13 +39,13 @@ public class ScooterService {
     public ScooterDto updateScooter(ScooterDto dto){
         Scooter scooter = modelMapper.map(dto,Scooter.class);
         Scooter response = scooterRepository.updateScooter(scooter);
+        if(dto.booked){
+            timerService.setDateTimeEnd(dto.getId(),dto.getTimeLeft());
+        }
+        else{
+            timerService.resetDateTimeEnd(dto.getId());
+        }
         return modelMapper.map(response,ScooterDto.class);
-//        if(dto.booked){
-//            timerService.startTimer(dto.getId(),dto.getTimeLeft());
-//        }
-//        else{
-//            timerService.stopTimer(dto.getId());
-//        }
     }
 
     public void delete(long id){

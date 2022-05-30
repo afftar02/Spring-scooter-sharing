@@ -4,7 +4,6 @@ import by.grsu.scootersharing.dto.PersonDto;
 import by.grsu.scootersharing.model.Person;
 import by.grsu.scootersharing.repository.PersonRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,10 +21,12 @@ public class PersonService implements UserDetailsService {
     private final PersonRepository personRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final TimerService timerService;
 
-    public PersonService(PersonRepository personRepository, PasswordEncoder passwordEncoder){
+    public PersonService(PersonRepository personRepository, PasswordEncoder passwordEncoder, TimerService timerService){
         this.personRepository = personRepository;
         this.passwordEncoder = passwordEncoder;
+        this.timerService = timerService;
         modelMapper = new ModelMapper();
     }
 
@@ -48,11 +49,13 @@ public class PersonService implements UserDetailsService {
 
     public PersonDto getPersonById(long id){
         Person response = personRepository.getPersonById(id);
+        timerService.updateScootersTimeLeft(response.getScooters());
         return modelMapper.map(response, PersonDto.class);
     }
 
     public PersonDto getPersonByUsername(String username){
         Person response = personRepository.getPersonByUsername(username);
+        timerService.updateScootersTimeLeft(response.getScooters());
         return modelMapper.map(response, PersonDto.class);
     }
 
