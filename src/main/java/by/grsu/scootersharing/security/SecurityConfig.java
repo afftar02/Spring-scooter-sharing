@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -41,14 +42,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
         http.authorizeRequests().antMatchers("/scooter-sharing/api/login/**", "/scooter-sharing/api/token/refresh/**", "/scooter-sharing/api/user/create/**").permitAll();
 
-        http.authorizeRequests().antMatchers(GET, "/scooter-sharing/api/scooters/**").hasAnyAuthority("User");
-        http.authorizeRequests().antMatchers(POST,"/scooter-sharing/api/scooters/create/**").hasAnyAuthority("Admin");
-        http.authorizeRequests().antMatchers(PUT, "/scooter-sharing/api/scooters/update/**").hasAnyAuthority("User");
-        http.authorizeRequests().antMatchers(DELETE,"/scooter-sharing/api/scooters/delete/**").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(GET, "/scooter-sharing/api/scooters/**").hasAuthority("User");
+        http.authorizeRequests().antMatchers(POST,"/scooter-sharing/api/scooters/create/**").hasAuthority("Admin");
+        http.authorizeRequests().antMatchers(PUT, "/scooter-sharing/api/scooters/update/**").hasAuthority("User");
+        http.authorizeRequests().antMatchers(DELETE,"/scooter-sharing/api/scooters/delete/**").hasAuthority("Admin");
 
-        http.authorizeRequests().antMatchers(GET, "/scooter-sharing/api/user/**").hasAnyAuthority("User");
-        http.authorizeRequests().antMatchers(PUT, "/scooter-sharing/api/user/update/**").hasAnyAuthority("User");
-        http.authorizeRequests().antMatchers(DELETE, "/scooter-sharing/api/user/delete/**").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(GET, "/scooter-sharing/api/user/**").hasAuthority("User");
+        http.authorizeRequests().antMatchers(PUT, "/scooter-sharing/api/user/update/**").hasAuthority("User");
+        http.authorizeRequests().antMatchers(DELETE, "/scooter-sharing/api/user/delete/**").hasAuthority("Admin");
 
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
@@ -59,6 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
     @Override

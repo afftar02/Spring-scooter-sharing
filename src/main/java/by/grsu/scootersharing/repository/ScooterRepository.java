@@ -15,7 +15,6 @@ public class ScooterRepository {
     private final ScooterRepositoryAbstract scooterRepositoryAbstract;
     private final LocationRepositoryAbstract locationRepositoryAbstract;
 
-    @Autowired
     public ScooterRepository(ScooterRepositoryAbstract scooterRepositoryAbstract, LocationRepositoryAbstract locationRepositoryAbstract){
         this.scooterRepositoryAbstract = scooterRepositoryAbstract;
         this.locationRepositoryAbstract = locationRepositoryAbstract;

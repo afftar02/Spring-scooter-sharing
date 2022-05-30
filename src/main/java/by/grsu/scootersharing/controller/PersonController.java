@@ -36,8 +36,7 @@ public class PersonController {
 
     private final PersonService personService;
     private final ObjectMapper mapper;
-
-    @Autowired
+    
     public PersonController(PersonService personService, ObjectMapper mapper) {
         this.personService = personService;
         this.mapper = mapper;

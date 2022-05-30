@@ -15,8 +15,7 @@ import java.util.List;
 public class PersonRepository {
     private final PersonRepositoryAbstract personRepositoryAbstract;
     private final RoleRepositoryAbstract roleRepositoryAbstract;
-
-    @Autowired
+    
     public PersonRepository(PersonRepositoryAbstract personRepositoryAbstract, RoleRepositoryAbstract roleRepositoryAbstract) {
         this.personRepositoryAbstract = personRepositoryAbstract;
         this.roleRepositoryAbstract = roleRepositoryAbstract;

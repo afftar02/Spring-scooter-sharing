@@ -23,7 +23,6 @@ public class PersonService implements UserDetailsService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public PersonService(PersonRepository personRepository, PasswordEncoder passwordEncoder){
         this.personRepository = personRepository;
         this.passwordEncoder = passwordEncoder;
@@ -60,6 +59,7 @@ public class PersonService implements UserDetailsService {
     public PersonDto create(PersonDto dto){
         Person person = modelMapper.map(dto, Person.class);
         person.setPassword(passwordEncoder.encode(person.getPassword()));
+//        person.setRoles(new ArrayList<>(this.role));
         Person response = personRepository.create(person);
         return modelMapper.map(response, PersonDto.class);
     }

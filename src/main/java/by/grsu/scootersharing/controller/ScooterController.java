@@ -24,7 +24,6 @@ public class ScooterController {
     private final ScooterService scooterService;
     private final ObjectMapper mapper;
 
-    @Autowired
     public ScooterController(ScooterService scooterService, ObjectMapper mapper) {
         this.scooterService = scooterService;
         this.mapper = mapper;

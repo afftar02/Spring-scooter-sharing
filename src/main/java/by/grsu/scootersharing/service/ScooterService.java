@@ -16,7 +16,6 @@ public class ScooterService {
     private final ModelMapper modelMapper;
 //    private final TimerService timerService;
 
-    @Autowired
     public ScooterService(ScooterRepository scooterRepository){
         this.scooterRepository = scooterRepository;
         this.modelMapper = new ModelMapper();
